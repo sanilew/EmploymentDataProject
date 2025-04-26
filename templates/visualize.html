@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Department Distribution</h2>
+    <canvas id="deptChart" width="400" height="200"></canvas>
+    <h2>Age Distribution</h2>
+    <canvas id="ageChart" width="400" height="200"></canvas>
+
+    <script>
+        const departments = {{ departments|tojson }};
+        const ages = {{ ages|tojson }};
+
+        const ctxDept = document.getElementById('deptChart').getContext('2d');
+        new Chart(ctxDept, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(departments),
+                datasets: [{
+                    label: '# of Employees',
+                    data: Object.values(departments),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        const ctxAge = document.getElementById('ageChart').getContext('2d');
+        new Chart(ctxAge, {
+            type: 'line',
+            data: {
+                labels: ages,
+                datasets: [{
+                    label: 'Employee Ages',
+                    data: ages,
+                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    fill: false,
+                    tension: 0.1
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
